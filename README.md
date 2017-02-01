@@ -1,1 +1,1 @@
-get data from sensors and send it out by BLE
+get data from sensor and notify out by BLE
