@@ -1,6 +1,6 @@
 var util = require('util');
 var bleno = require('../..');
-var sensor = require('/home/pi/Downloads/node_modules/node-dht-sensor/build/Release/node_dht_sensor');
+var sensor = require('../../node_dht_sensor');
 
 
 
