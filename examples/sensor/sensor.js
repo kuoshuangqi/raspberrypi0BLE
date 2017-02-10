@@ -3,8 +3,9 @@ var bleno = require('../..');
 var SensorService = require('./sensor-service');
 
 var sensorService = new SensorService();
-var name = 'TempHumiSensor'; 
+var name = 'TempHumiSensor'; //set the name of the device
 
+//start to advertise when hardware is ready
 bleno.on('stateChange', function(state) {
   if (state === 'poweredOn') {
     
@@ -19,6 +20,7 @@ bleno.on('stateChange', function(state) {
   }
 });
 
+//set service, refer to sensor-service.js
 bleno.on('advertisingStart', function(err) {
   if (!err) {
     console.log('advertising...');

@@ -3,7 +3,7 @@ var bleno = require('../..');
 var sensor = require('../../node_dht_sensor');
 
 
-
+//set the UUID and properties of characteristics
 var SensorCharacteristic = function() {
   SensorCharacteristic.super_.call(this, {
     uuid: '12345678901234567890123456789012',
@@ -13,20 +13,11 @@ var SensorCharacteristic = function() {
 
 util.inherits(SensorCharacteristic, bleno.Characteristic);
 
+//set the action when device trying to send out notification
 SensorCharacteristic.prototype.onSubscribe = function(maxValueSize, updateValueCallback) {
   console.log('sensor data read');
 
-/*  this.counter = 0;
-  this.changeInterval = setInterval(function() {
-    var data = new Buffer(4);
-    data.writeUInt32LE(this.counter, 0);
-
-    console.log('NotifyOnlyCharacteristic update value: ' + this.counter);
-    updateValueCallback(data);
-    this.counter++;
-
-  }.bind(this), 2000);
-*/
+  //read data of the sensor every 2 seconds
   this.changeInterval = setInterval(function() {
     var data = new Buffer(12);
     sensor.read(11, 18, function(err, temperature, humidity) {
@@ -34,9 +25,6 @@ SensorCharacteristic.prototype.onSubscribe = function(maxValueSize, updateValueC
             console.log('temp: ' + temperature.toFixed(1) + '°C, ' +  'humidity: ' + humidity.toFixed(1) + '%' );
             data.write('            ');
             data.write(temperature.toFixed(1) + ' , ' + humidity.toFixed(1));
-        //    data.write(temperature.toFixed(1) + );
-//            data.write(':');
-//            data.write(humidity.toFixed(1));
             updateValueCallback(data);
         }
         else {
@@ -47,6 +35,7 @@ SensorCharacteristic.prototype.onSubscribe = function(maxValueSize, updateValueC
   }.bind(this), 2000);
 };
 
+//remove actions when device stop send out notification
 SensorCharacteristic.prototype.onUnsubscribe = function() {
   console.log('SensorCharacteristic unsubscribe');
 
